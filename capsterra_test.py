@@ -112,9 +112,16 @@ def scrape_category(row):
         products_df = products_df[actual_cols + other_cols]
         return products_df
 
+user = os.environ['PROXY_USER']
+password = os.environ['PROXY_PASSWORD']
+proxy_host = os.environ['PROXY_HOST']
+proxy_port = os.environ['PROXY_PORT']
+
+proxy_string = f"{user}:{password}@{proxy_host}:{proxy_port}"
 
 if __name__ == "__main__":
-    with SB(uc=True, headless=True, xvfb=False, maximize=True) as sb:
+    with SB(uc=True, headless=True, xvfb=False, maximize=True,
+            proxy=proxy_string) as sb:
         url = "https://www.capterra.com/categories/"
         sb.activate_cdp_mode(url)
         print("Getting All Categories...")
