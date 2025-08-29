@@ -15,6 +15,10 @@ import asyncio
 import multiprocessing
 import numpy as np
 import os
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
+
 
 # Get the directory where this script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -162,7 +166,7 @@ if __name__ == "__main__":
 
         url = "https://www.capterra.com/categories/"
 
-        sb.uc_open_with_reconnect(url, 5)
+        sb.open(url)
         print("Getting All Categories...")
         sb.sleep(4)
         html = sb.get_page_source()
