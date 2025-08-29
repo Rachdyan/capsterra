@@ -162,7 +162,7 @@ if __name__ == "__main__":
 
         url = "https://www.capterra.com/categories/"
 
-        sb.activate_cdp_mode(url)
+        sb.uc_open_with_reconnect(url, 5)
         print("Getting All Categories...")
         sb.sleep(4)
         html = sb.get_page_source()
