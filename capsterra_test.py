@@ -78,7 +78,9 @@ def scrape_tables(products_div, row):
 
 def scrape_category(row):
 
-    with SB(uc=True, headless=True, maximize=True) as sb:
+    with SB(uc=True, headless=True, 
+            xvfb=True,
+            maximize=True) as sb:
         link = row['cloud_link']
         # sb.cdp.open(link)
         sb.uc_open(link)
