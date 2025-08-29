@@ -78,7 +78,7 @@ def scrape_tables(products_div, row):
 
 def scrape_category(row):
 
-    with SB(uc=True, headless=True, 
+    with SB(uc=True, headless=False, 
             xvfb=True,
             maximize=True) as sb:
         link = row['cloud_link']
@@ -170,7 +170,8 @@ if __name__ == "__main__":
 
         sb.open(url)
         print("Getting All Categories...")
-        sb.sleep(4)
+        sb.sleep(7)
+        sb.save_screenshot('result.png')
         html = sb.get_page_source()
         print(html)
         soup = BeautifulSoup(html, 'html.parser')
