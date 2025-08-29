@@ -168,7 +168,7 @@ if __name__ == "__main__":
 
         url = "https://www.capterra.com/categories/"
 
-        sb.open(url)
+        sb.activate_cdp_mode(url)
         print("Getting All Categories...")
         sb.sleep(7)
         sb.save_screenshot('result.png')
