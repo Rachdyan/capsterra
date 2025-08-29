@@ -127,6 +127,7 @@ if __name__ == "__main__":
         print("Getting All Categories...")
         sb.sleep(4)
         html = sb.get_page_source()
+        print(html)
         soup = BeautifulSoup(html, 'html.parser')
         list_raw = soup.select_one("div[data-testid*='alphabetical-list']")
         list_all = list_raw.select("li[data-testid*='group-list-item']")
