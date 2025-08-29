@@ -39,8 +39,13 @@ jobs:
         seleniumbase install chromedriver
 
     - name: Run capsterra_test.py
+      env:
+        PROXY_USER: ${{ secrets.PROXY_USER }}
+        PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
+        PROXY_HOST: ${{ secrets.PROXY_HOST }}
+        PROXY_PORT: ${{ secrets.PROXY_PORT }}
       run: |
-        python capsterra_test.py
+        python capsterra_test.py --debug
 
     - name: Commit and push results
       run: |
