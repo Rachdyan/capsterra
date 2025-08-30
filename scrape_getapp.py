@@ -109,6 +109,8 @@ def scrape_category(row, retries=3, delay=5):
                 
                 products_df = pd.DataFrame(result_list)
                 print(f"Finished Scraping Category: {row['Category Name']}")
+                print(f"Total {row['Category Name']} Products Found: {len(products_df)}")
+                print(products_df.head(5))
                 return products_df
 
         except (TimeoutException, ReadTimeoutError) as e:
