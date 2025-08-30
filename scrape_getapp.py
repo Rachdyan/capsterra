@@ -134,6 +134,15 @@ def scrape_category(row, retries=3, delay=5):
     return pd.DataFrame()
 
 
+def clean_illegal_chars(df):
+    # Remove illegal characters from all string columns
+    illegal_pattern = re.compile(r'[\x00-\x1F\x7F-\x9F]')
+    for col in df.select_dtypes(include=['object']):
+        df[col] = df[col].astype(str).apply(lambda x: illegal_pattern.sub('', x))
+    return df
+
+
+
 if __name__ == "__main__":
     url = "https://www.getapp.com/browse/"
 
@@ -186,11 +195,13 @@ if __name__ == "__main__":
         split_results = [df for df in split_results if not df.empty]
         if split_results:
              split_products_df = pd.concat(split_results, ignore_index=True)
+             split_products_df = clean_illegal_chars(split_products_df)  # Clean before saving
              output_path = os.path.join(result_dir, f"GetApp Products Results Part {idx + 1}.xlsx")
              split_products_df.to_excel(output_path, index=False)
              print(f"Saved split {idx + 1} results to {output_path}")
         
 
     final_results_df = pd.concat([df for df in all_results if not df.empty], ignore_index=True)
+    final_results_df = clean_illegal_chars(final_results_df)  # Clean before saving
     final_results_df.to_excel(os.path.join(result_dir, "GetApp All Products Results.xlsx"), index=False)
     print("Finished processing all splits.")
