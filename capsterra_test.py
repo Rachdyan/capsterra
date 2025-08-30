@@ -62,10 +62,19 @@ def scrape_tables(products_div, row):
     for container in products_div:
         product_link = container.select_one("a").attrs['href']
         product_link = "https://www.capterra.com" + product_link
-        product_name = container.select_one("h2").get_text(strip=True)
+
+        try:
+            product_name = container.select_one("h2").get_text(strip=True)
+        except:
+            product_name = ""
+
         product_description_tag = container.select_one("p")
-        product_description = product_description_tag.get_text(strip=True) if product_description_tag else ""
-        product_description = product_description.split('Learn More')[0].strip()
+        try:
+            product_description = product_description_tag.get_text(strip=True) if product_description_tag else ""
+            product_description = product_description.split('Learn More')[0].strip()
+        except:
+            product_description = ""
+        
         result_list.append({
             'Product Category': row['category_name'],
             'Product Category Link': row['cloud_link'],
@@ -78,12 +87,14 @@ def scrape_tables(products_div, row):
 
 def scrape_category(row):
 
-    with SB(uc=True, headless=False, 
+    with SB(uc=True, headless=True, 
             xvfb=True,
             maximize=True) as sb:
         link = row['cloud_link']
         # sb.cdp.open(link)
         sb.uc_open(link)
+        sb.uc_gui_click_captcha()
+        # sb.handle_ removed; not a valid method
         print(f"Scraping Category: {row['category_name']}")
         sb.sleep(5)
         html = sb.get_page_source()
@@ -198,7 +209,7 @@ if __name__ == "__main__":
         all_categories_df = pd.DataFrame(categories_data)
         print(all_categories_df)
 
-        all_categories_df = all_categories_df.iloc[:20]
+        # all_categories_df = all_categories_df.iloc[:400]
         # Split DataFrame into 4 parts
         split_dfs = np.array_split(all_categories_df, 4)
         all_results = []
@@ -207,7 +218,7 @@ if __name__ == "__main__":
         for idx, part_df in enumerate(split_dfs):
             print(f"Processing part {idx+1} with {len(part_df)} categories")
             rows = [row.to_dict() for _, row in part_df.iterrows()]
-            with multiprocessing.Pool(processes=4) as pool:  # adjust processes as needed
+            with multiprocessing.Pool(processes=8) as pool:  # adjust processes as needed
                 results = pool.map(scrape_category, rows)
                 all_results.extend(results)
             part_products_df = pd.concat(results, ignore_index=True)
