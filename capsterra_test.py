@@ -93,7 +93,8 @@ def scrape_category(row):
         link = row['cloud_link']
         # sb.cdp.open(link)
         sb.uc_open(link)
-        sb.uc_gui_click_captcha()
+        # sb.uc_gui_click_captcha()
+        sb.uc_gui_click_cf()
         # sb.handle_ removed; not a valid method
         print(f"Scraping Category: {row['category_name']}")
         sb.sleep(5)
