@@ -23,7 +23,7 @@ proxy_port = os.environ['PROXY_PORT']
 proxy_string = f"{user}:{password}@{proxy_host}:{proxy_port}"
 
 if __name__ == "__main__":
-    with SB(uc=True, headless=False, 
+    with SB(uc=True, headless=True, 
             xvfb=True, maximize=True,
             proxy=proxy_string
             ) as sb:
@@ -35,6 +35,7 @@ if __name__ == "__main__":
 
         html = sb.get_page_source()
         soup = BeautifulSoup(html, 'html.parser')
+        print(soup)
         tables = soup.select("table")
 
         categories = []
