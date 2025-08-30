@@ -19,6 +19,18 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 result_dir = os.path.join(script_dir, "result")
 os.makedirs(result_dir, exist_ok=True)
 
+user = os.environ['PROXY_USER']
+password = os.environ['PROXY_PASSWORD']
+proxy_host = os.environ['PROXY_HOST']
+proxy_port = os.environ['PROXY_PORT']
+
+proxy_string = f"{user}:{password}@{proxy_host}:{proxy_port}"
+
+proxies = { 
+              "http"  : proxy_string, 
+              "https" : proxy_string, 
+            }
+
 def scrape_tables(products_div, row, sb):
     results = []
     for product_div in products_div:
@@ -57,6 +69,8 @@ def scrape_tables(products_div, row, sb):
                     'Description': description
             })
     return results
+
+
 
 
 def scrape_category(row, retries=3, delay=5):
@@ -116,12 +130,14 @@ def scrape_category(row, retries=3, delay=5):
 if __name__ == "__main__":
     url = "https://www.getapp.com/browse/"
 
-    response = curl_cffi.get(url, impersonate="chrome")
+    response = curl_cffi.get(url, impersonate="chrome",
+                             proxies=proxies)
 
     print("Getting All Categories for GetApp..")
     html = response.text
-            # Parsing HTML menggunakan BeautifulSoup
+    # Parsing HTML menggunakan BeautifulSoup
     soup = BeautifulSoup(html, 'html.parser')
+    print(soup)
 
     categories_div = soup.select_one('div[class*="Categories"]').find_all('div', recursive=False)
     categories_div = categories_div[1:]
