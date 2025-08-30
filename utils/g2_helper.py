@@ -5,16 +5,9 @@ from datetime import datetime
 import re
 import time
 import requests
-import random
-import json
-import concurrent.futures
-import threading
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from seleniumbase import SB
-import asyncio
 import multiprocessing
 import numpy as np
-import nest_asyncio
 
 HEADERS = {
     'accept': '*/*',
