@@ -146,14 +146,23 @@ def clean_illegal_chars(df):
 if __name__ == "__main__":
     url = "https://www.getapp.com/browse/"
 
-    response = curl_cffi.get(url, impersonate="chrome",
-                             proxies=proxies)
+    with SB(uc=True, headless=True, 
+            xvfb=True,
+            maximize=True,
+            proxy=proxy_string) as sb:
+        sb.uc_open(url)
+        sb.sleep(5)
+        html = sb.get_page_source()
+        soup = BeautifulSoup(html, 'html.parser')
 
-    print("Getting All Categories for GetApp..")
-    html = response.text
-    # Parsing HTML menggunakan BeautifulSoup
-    soup = BeautifulSoup(html, 'html.parser')
-    print(soup)
+    # response = curl_cffi.get(url, impersonate="chrome",
+    #                          proxies=proxies)
+
+    # print("Getting All Categories for GetApp..")
+    # html = response.text
+    # # Parsing HTML menggunakan BeautifulSoup
+    # soup = BeautifulSoup(html, 'html.parser')
+    # print(soup)
 
     categories_div = soup.select_one('div[class*="Categories"]').find_all('div', recursive=False)
     categories_div = categories_div[1:]
