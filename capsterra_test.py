@@ -92,7 +92,7 @@ def scrape_category(row):
             maximize=True) as sb:
         link = row['cloud_link']
         # sb.cdp.open(link)
-        sb.activate_cdp_mode(link)
+        sb.uc_open_with_reconnect(link, 5)
         sb.uc_gui_click_captcha()
         sb.uc_gui_click_cf()
         # sb.handle_ removed; not a valid method
