@@ -44,8 +44,10 @@ def scrape_tables(products_div, row, sb):
                             evt_id = last_header_button.get('data-evt-id')
                             button_selector = f'span[role="button"][data-evt-id="{evt_id}"]'
                             sb.click(button_selector)
-                            sb.sleep(4)
                             sb.switch_to_window(1)
+                            sb.sleep(3)
+                            sb.refresh_page()
+                            sb.sleep(2)
                             website_url = sb.get_current_url()
                             print("Website URL:", website_url)
                             sb.driver.close()
@@ -152,7 +154,7 @@ if __name__ == "__main__":
         category_1 = category_div.select_one('div').get_text(strip=True)
         cat_name_raw = category_div.select('div')[1].find_all('a')
         cat_names = [cat.select_one('span').get_text(strip=True) for cat in cat_name_raw]
-        cat_links = ["https://www.getapp.com/" + cat['href'] for cat in cat_name_raw]
+        cat_links = ["https://www.getapp.com" + cat['href'] for cat in cat_name_raw]
         web_based_links = [link + "os/web-based" for link in cat_links]
         
         for name, link, web_link in zip(cat_names, cat_links, web_based_links):

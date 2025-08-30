@@ -9,3 +9,4 @@ selenium
 seleniumbase
 python-dotenv==1.1.0
 curl_cffi
+openpyxl
