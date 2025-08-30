@@ -1,4 +1,4 @@
-name: G2 Scrape
+name: getapp Scrape
 on:
   workflow_dispatch:
   #schedule:
