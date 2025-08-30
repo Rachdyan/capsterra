@@ -210,7 +210,7 @@ if __name__ == "__main__":
         all_categories_df = pd.DataFrame(categories_data)
         print(all_categories_df)
 
-        # all_categories_df = all_categories_df.iloc[:400]
+        all_categories_df = all_categories_df.iloc[:400]
         # Split DataFrame into 4 parts
         split_dfs = np.array_split(all_categories_df, 4)
         all_results = []
