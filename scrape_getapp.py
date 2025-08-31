@@ -82,7 +82,7 @@ def scrape_category(row, retries=3, delay=5):
     for attempt in range(retries):
         try:
             with SB(uc=True, 
-                    headless=True, 
+                    headless=False, 
                     maximize=True,
                     proxy=proxy_string) as sb:
                 print(f"Attempt {attempt + 1}/{retries} for {row['Category Name']}")
