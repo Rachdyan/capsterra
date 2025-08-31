@@ -146,10 +146,11 @@ def clean_illegal_chars(df):
 if __name__ == "__main__":
     url = "https://www.getapp.com/browse/"
 
-    with SB(uc=True, headless=True, 
+    with SB(uc=True, headless=False, 
             xvfb=True,
             maximize=True,
-            proxy=proxy_string) as sb:
+            proxy=proxy_string
+            ) as sb:
         sb.uc_open(url)
         sb.sleep(5)
         html = sb.get_page_source()
@@ -162,7 +163,7 @@ if __name__ == "__main__":
     # html = response.text
     # # Parsing HTML menggunakan BeautifulSoup
     # soup = BeautifulSoup(html, 'html.parser')
-    
+
     print(soup)
 
     categories_div = soup.select_one('div[class*="Categories"]').find_all('div', recursive=False)
