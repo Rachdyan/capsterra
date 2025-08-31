@@ -162,7 +162,8 @@ if __name__ == "__main__":
     # html = response.text
     # # Parsing HTML menggunakan BeautifulSoup
     # soup = BeautifulSoup(html, 'html.parser')
-    # print(soup)
+    
+    print(soup)
 
     categories_div = soup.select_one('div[class*="Categories"]').find_all('div', recursive=False)
     categories_div = categories_div[1:]
