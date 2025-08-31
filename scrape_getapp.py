@@ -186,7 +186,7 @@ if __name__ == "__main__":
             })
 
     all_categories_df = pd.DataFrame(results)
-    all_categories_df = np.array_split(all_categories_df, 2)[0]
+    all_categories_df = np.array_split(all_categories_df, 4)[0]
 
     print(f"Total Categories Found: {len(all_categories_df)}")
 
