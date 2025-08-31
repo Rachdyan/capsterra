@@ -23,9 +23,9 @@ proxy_port = os.environ['PROXY_PORT']
 proxy_string = f"{user}:{password}@{proxy_host}:{proxy_port}"
 
 if __name__ == "__main__":
-    with SB(uc=True, headless=True, 
+    with SB(uc=True, headless=False, 
             xvfb=True, maximize=True,
-            proxy=proxy_string
+            #proxy=proxy_string
             ) as sb:
         print("Getting G2 Categories...")
         url = "https://www.g2.com/categories/"

@@ -45,7 +45,7 @@ def scrape_tables(products_div, row, sb):
                             button_selector = f'span[role="button"][data-evt-id="{evt_id}"]'
                             sb.click(button_selector)
                             sb.switch_to_window(1)
-                            sb.sleep(3)
+                            sb.sleep(2)
                             sb.refresh_page()
                             sb.sleep(2)
                             website_url = sb.get_current_url()
@@ -106,7 +106,7 @@ def scrape_category(row, retries=3, delay=5):
                     print(f"Scraping {url}")
                     # sb.cdp.open(url)
                     sb.uc_open(url)
-                    sb.sleep(5)
+                    sb.sleep(4)
                     html = sb.get_page_source()
                     soup = BeautifulSoup(html, 'html.parser')
                     all_product_divs = soup.select('div[data-evt-name*="product"]')
@@ -184,6 +184,8 @@ if __name__ == "__main__":
             })
 
     all_categories_df = pd.DataFrame(results)
+    all_categories_df = np.array_split(all_categories_df, 2)[0]
+
     print(f"Total Categories Found: {len(all_categories_df)}")
 
     # all_categories_df
