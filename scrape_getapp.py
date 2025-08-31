@@ -87,7 +87,7 @@ def scrape_category(row, retries=3, delay=5):
                     proxy=proxy_string) as sb:
                 print(f"Attempt {attempt + 1}/{retries} for {row['Category Name']}")
                 sb.uc_open(link)
-                sb.sleep(3)
+                sb.sleep(7)
 
                 html = sb.get_page_source()
                         # Parsing HTML menggunakan BeautifulSoup
@@ -106,7 +106,7 @@ def scrape_category(row, retries=3, delay=5):
                     print(f"Scraping {url}")
                     # sb.cdp.open(url)
                     sb.uc_open(url)
-                    sb.sleep(4)
+                    sb.sleep(7)
                     html = sb.get_page_source()
                     soup = BeautifulSoup(html, 'html.parser')
                     all_product_divs = soup.select('div[data-evt-name*="product"]')
