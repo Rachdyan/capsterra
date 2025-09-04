@@ -187,10 +187,10 @@ if __name__ == "__main__":
             proxy=proxy_string
             ) as sb:
 
-        #sb.uc_open_with_reconnect(url, 5)
+        sb.uc_open_with_reconnect(url, 5)
         #sb.sleep(4)
 
-        sb.activate_cdp_mode(url)
+        #sb.activate_cdp_mode(url)
         sb.sleep(4)
         sb.uc_gui_click_captcha()
         sb.sleep(10)
