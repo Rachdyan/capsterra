@@ -193,6 +193,7 @@ if __name__ == "__main__":
         sb.activate_cdp_mode(url)
         sb.sleep(4)
         sb.uc_gui_click_captcha()
+        sb.sleep(10)
 
         html = sb.get_page_source()
 
