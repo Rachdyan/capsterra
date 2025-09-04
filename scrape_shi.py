@@ -180,14 +180,19 @@ if __name__ == "__main__":
     url = "https://www.shi.com/shop/search/software"
     print("Getting All Categories")
 
-    with SB(uc=True, headless=False, 
-            xvfb=True,
+    with SB(uc=True, 
+            #headless=False, 
+            #xvfb=True,
             maximize=True,
             proxy=proxy_string
             ) as sb:
 
-        sb.uc_open_with_reconnect(url, 5)
+        #sb.uc_open_with_reconnect(url, 5)
+        #sb.sleep(4)
+
+        sb.activate_cdp_mode(url)
         sb.sleep(4)
+        sb.uc_gui_click_captcha()
 
         html = sb.get_page_source()
 
