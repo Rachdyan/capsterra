@@ -23,6 +23,12 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
+    
+    - name: Set up X11
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb x11-utils xorg xserver-xorg-core
+        sudo apt-get install -y x11-apps xfonts-base xfonts-75dpi xfonts-100dpi xfonts-cyrillic
 
     - name: Install dependencies
       run: |
@@ -33,7 +39,7 @@ jobs:
         pip install --upgrade pyautogui
 
     - name: Install Chrome
-      if: matrix.os == 'ubuntu-22.04'
+      # if: matrix.os == 'ubuntu-22.04'
       run: |
         sudo apt install google-chrome-stable
 
