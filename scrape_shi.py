@@ -183,7 +183,8 @@ if __name__ == "__main__":
     with SB(uc=True, 
             #headless=False, 
             #xvfb=True,
-            maximize=True,
+            #maximize=True,
+            test=True,
             proxy=proxy_string
             ) as sb:
 
@@ -194,6 +195,7 @@ if __name__ == "__main__":
         sb.sleep(4)
         sb.uc_gui_click_captcha()
         sb.sleep(10)
+        sb.uc_gui_handle_captcha()
 
         html = sb.get_page_source()
 
