@@ -185,7 +185,7 @@ if __name__ == "__main__":
             xvfb=True,
             #maximize=True,
             test=True,
-            proxy=proxy_string
+            #proxy=proxy_string
             ) as sb:
 
         sb.uc_open_with_reconnect(url, 5)
