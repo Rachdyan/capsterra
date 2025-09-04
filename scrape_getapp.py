@@ -19,17 +19,17 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 result_dir = os.path.join(script_dir, "result")
 os.makedirs(result_dir, exist_ok=True)
 
-user = os.environ['PROXY_USER']
-password = os.environ['PROXY_PASSWORD']
-proxy_host = os.environ['PROXY_HOST']
-proxy_port = os.environ['PROXY_PORT']
+# user = os.environ['PROXY_USER']
+# password = os.environ['PROXY_PASSWORD']
+# proxy_host = os.environ['PROXY_HOST']
+# proxy_port = os.environ['PROXY_PORT']
 
-proxy_string = f"{user}:{password}@{proxy_host}:{proxy_port}"
+# proxy_string = f"{user}:{password}@{proxy_host}:{proxy_port}"
 
-proxies = { 
-              "http"  : proxy_string, 
-              "https" : proxy_string, 
-            }
+# proxies = { 
+#               "http"  : proxy_string, 
+#               "https" : proxy_string, 
+#             }
 
 def scrape_tables(products_div, row, sb):
     results = []
@@ -84,7 +84,8 @@ def scrape_category(row, retries=3, delay=5):
             with SB(uc=True, 
                     headless=False, 
                     maximize=True,
-                    proxy=proxy_string) as sb:
+                    #proxy=proxy_string
+                    ) as sb:
                 print(f"Attempt {attempt + 1}/{retries} for {row['Category Name']}")
                 sb.uc_open(link)
                 sb.sleep(7)
@@ -149,22 +150,14 @@ if __name__ == "__main__":
     with SB(uc=True, headless=False, 
             xvfb=True,
             maximize=True,
-            proxy=proxy_string
+            #proxy=proxy_string
             ) as sb:
         sb.uc_open(url)
         sb.sleep(5)
         html = sb.get_page_source()
         soup = BeautifulSoup(html, 'html.parser')
 
-    # response = curl_cffi.get(url, impersonate="chrome",
-    #                          proxies=proxies)
-
-    # print("Getting All Categories for GetApp..")
-    # html = response.text
-    # # Parsing HTML menggunakan BeautifulSoup
-    # soup = BeautifulSoup(html, 'html.parser')
-
-    print(soup)
+    # print(soup)
 
     categories_div = soup.select_one('div[class*="Categories"]').find_all('div', recursive=False)
     categories_div = categories_div[1:]
@@ -186,7 +179,7 @@ if __name__ == "__main__":
             })
 
     all_categories_df = pd.DataFrame(results)
-    all_categories_df = np.array_split(all_categories_df, 2)[1]
+   #all_categories_df = np.array_split(all_categories_df, 2)[1]
 
     print(f"Total Categories Found: {len(all_categories_df)}")
 
@@ -215,6 +208,6 @@ if __name__ == "__main__":
         
 
     final_results_df = pd.concat([df for df in all_results if not df.empty], ignore_index=True)
-    final_results_df = clean_illegal_chars(final_results_df)  # Clean before saving
+    final_results_df = clean_illegal_chars(final_results_df)  
     final_results_df.to_excel(os.path.join(result_dir, "GetApp All Products Results.xlsx"), index=False)
     print("Finished processing all splits.")
