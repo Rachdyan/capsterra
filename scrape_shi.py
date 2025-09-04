@@ -181,8 +181,8 @@ if __name__ == "__main__":
     print("Getting All Categories")
 
     with SB(uc=True, 
-            #headless=False, 
-            #xvfb=True,
+            headless=False, 
+            xvfb=True,
             #maximize=True,
             test=True,
             proxy=proxy_string
